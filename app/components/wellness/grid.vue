@@ -4,6 +4,7 @@
 
     <h3>{{ selected.name}}</h3>
     <Icon :name="selected.icon" size="128px" />
+    <p>{{ selected.description }}</p>
     <form @submit.prevent="addActivity">
       <input
       type="date"
@@ -41,7 +42,7 @@ const today = yyyy + '-' + mm + '-' + 12
 const date = ref(today)
 const activities = activityStore.activities
 
-const selected = ref<WellnessActivity>({id: '', name: '', icon: ''})
+const selected = ref<WellnessActivity>({id: '', name: '', icon: '', description: ''})
 
 function setActivity(activity:WellnessActivity) {
   console.log('set id', activity.id);
@@ -49,6 +50,7 @@ function setActivity(activity:WellnessActivity) {
   selected.value.id = activity.id
   selected.value.name = activity.name
   selected.value.icon = activity.icon
+  selected.value.description = activity.description
 }
 
 function resetActivity() {
