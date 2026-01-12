@@ -13,4 +13,6 @@ export interface LoggedActivity {
 export interface WellnessScores {
   weekly: number[];
   bingo: number[];
+  total: number[];
+  grandTotal: number;
 }

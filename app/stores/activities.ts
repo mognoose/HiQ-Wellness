@@ -2,13 +2,23 @@ import { defineStore } from 'pinia';
 import type { WellnessActivity, LoggedActivity, WellnessScores } from '~/types/wellnessActivity';
 
 interface ActivitiesState {
+  period: Period;
   activities: WellnessActivity[];
   loggedActivities: LoggedActivity[];
   scores: WellnessScores;
 }
 
+interface Period {
+  start: Date;
+  end: Date;
+}
+
 export const useActivityStore = defineStore('activities', {
   state: (): ActivitiesState => ({
+    period: {
+      start: new Date('2026-01-12'),
+      end: new Date('2026-02-14'),
+    },
     activities: <Array<WellnessActivity>>[
       {
         id: 'cardio',
@@ -69,17 +79,70 @@ export const useActivityStore = defineStore('activities', {
     scores: {
       weekly: [0,0,0,0,0],
       bingo: [0,0,0,0,0],
+      total: [0,0,0,0,0],
+      grandTotal: 0,
     }
   }),
   actions: {
     logActivity(activity: LoggedActivity) {
       this.loggedActivities.push(activity);
+      this.countScore();
       this.saveToLocalStorage();
     },
     removeLoggedActivity(date: string, id: string) {
       this.loggedActivities = this.loggedActivities
         .filter(item => item.date !== date || item.id !== id)
+      this.countScore();
       this.saveToLocalStorage();
+    },
+    countScore() {
+      const weeklyRanges: { start: Date; end: Date }[] = [];
+      const periodStart = new Date(this.period.start);
+      const periodEnd = new Date(this.period.end);
+
+      let currentWeekStart = new Date(periodStart);
+
+      while (currentWeekStart <= periodEnd) {
+        const currentWeekEnd = new Date(currentWeekStart);
+        currentWeekEnd.setDate(currentWeekEnd.getDate() + 6);
+
+        weeklyRanges.push({
+          start: new Date(currentWeekStart),
+          end: currentWeekEnd > periodEnd ? new Date(periodEnd) : currentWeekEnd,
+        });
+
+        currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+      }
+
+      const weeklyScores: number[] = [];
+      const bingoScores: number[] = [];
+      const totalScores: number[] = [];
+
+      for (const range of weeklyRanges) {
+        const activitiesInWeek = this.loggedActivities.filter((activity) => {
+          const activityDate = new Date(activity.date);
+          return activityDate >= range.start && activityDate <= range.end;
+        });
+
+        const uniqueActivityIdsInWeek = new Set(
+          activitiesInWeek.map((a) => a.id)
+        );
+        const weeklyScore = uniqueActivityIdsInWeek.size;
+        weeklyScores.push(weeklyScore);
+
+        if (weeklyScore === 9) {
+          bingoScores.push(1);
+          totalScores.push(10);
+        } else {
+          bingoScores.push(0);
+          totalScores.push(weeklyScore);
+        }
+      }
+
+      this.scores.weekly = weeklyScores;
+      this.scores.bingo = bingoScores;
+      this.scores.total = totalScores;
+      this.scores.grandTotal = totalScores.reduce((partialSum, a) => partialSum + a, 0);
     },
     saveToLocalStorage() {
       localStorage.setItem('loggedActivities', JSON.stringify(this.loggedActivities))

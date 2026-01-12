@@ -45,8 +45,6 @@ const activities = activityStore.activities
 const selected = ref<WellnessActivity>({id: '', name: '', icon: '', description: ''})
 
 function setActivity(activity:WellnessActivity) {
-  console.log('set id', activity.id);
-  console.log('activity ids', activities.map(a => a.id))
   selected.value.id = activity.id
   selected.value.name = activity.name
   selected.value.icon = activity.icon
@@ -61,7 +59,6 @@ function resetActivity() {
 }
 
 function addActivity() {
-  console.log(selected.value, date.value)
   activityStore.logActivity({id: selected.value.id, date: date.value})
   resetActivity()
 }

@@ -1,5 +1,5 @@
 <template>
-  <h2>Score: 0</h2>
+  <h2>Score: {{scores.grandTotal}}</h2>
   <table class="wellness-score-table">
     <thead>
       <th></th>
@@ -12,29 +12,28 @@
     <tbody>
       <tr>
         <th>Points for week</th>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
+        <td v-for="(score, index) in scores.weekly" :key="index">{{score}}</td>
       </tr>
       <tr>
         <td>Points for Bingo</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-
+        <td v-for="(score, index) in scores.bingo" :key="index">{{score}}</td>
       </tr>
       <tr>
         <td>Points total</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0</td>
+        <td v-for="(score, index) in scores.total" :key="index">{{score}}</td>
       </tr>
     </tbody>
   </table>
 </template>
+
+<script setup lang="ts">
+  import { useActivityStore } from "~/stores/activities";
+
+  onMounted(() => {
+    activityStore.countScore()
+  })
+  
+  const activityStore = useActivityStore();
+  const {scores} = storeToRefs(activityStore)
+
+</script>
