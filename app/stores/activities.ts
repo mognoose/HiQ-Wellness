@@ -161,6 +161,8 @@ export const useActivityStore = defineStore('activities', {
     }
   },
   getters: {
-    sortedActivities: state => state.loggedActivities.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    sortedActivities: (state) => {
+      return [...state.loggedActivities].sort((b, a) => new Date(a.date).getTime() - new Date(b.date).getTime());
+    },
   }
 });
