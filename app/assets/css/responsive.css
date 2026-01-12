@@ -7,7 +7,7 @@
   /* Header adjustments - using viewport units for fluid scaling */
   h1 {
     font-size: 4vw; /* Scale font with viewport */
-    max-width: 200px; 
+    max-width: 150px; 
     min-height: 20px; /* Ensure a minimum height for h1 */
   }
 
@@ -15,11 +15,6 @@
   h1::after {
     background-image: none; /* Remove complex styling for mobile */
     background-color: var(--color-primary-500); /* Just use solid background */
-  }
-
-  h1::after {
-    right: 100px; /* Small fixed offset */
-    transform: scaleX(-1);
   }
 
   .container h2 {
@@ -49,9 +44,9 @@
 
   /* Target the icon specifically */
   .wellness-grid .grid-item .iconify {
-    font-size: 80px; /* Further increase icon size */
-    width: 80px;
-    height: 80px;
+    font-size: 2rem; /* Further increase icon size */
+    width: 3rem;
+    height: 3rem;
   }
 
   /* Wellness List adjustments */
@@ -81,5 +76,6 @@
   .wellness-footer p {
     width: auto; /* Allow footer text to fit container */
     max-width: 80%;
+    font-size: .75rem;
   }
 }
