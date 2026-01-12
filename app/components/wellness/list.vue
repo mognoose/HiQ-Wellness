@@ -1,6 +1,6 @@
 <template>
   <div class="wellness-list">
-    <div class="wellness-row" v-for="activity in loggedActivities" :key="`${activity.date}-${activity.id}`">
+    <div class="wellness-row" v-for="activity in sortedActivities" :key="`${activity.date}-${activity.id}`">
       <div>
         {{ formatDate(activity.date) }}
       </div>
@@ -18,7 +18,7 @@
 import { useActivityStore, storeToRefs } from '#imports';
 
 const activityStore = useActivityStore()
-const { loggedActivities, activities } = storeToRefs(activityStore)
+const { activities, sortedActivities } = storeToRefs(activityStore)
 
 function formatDate(date:string) {
   const d = date.split('-')[2]

@@ -160,4 +160,7 @@ export const useActivityStore = defineStore('activities', {
       this.loggedActivities = storedActivities ? JSON.parse(storedActivities) : [];
     }
   },
+  getters: {
+    sortedActivities: state => state.loggedActivities.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  }
 });
