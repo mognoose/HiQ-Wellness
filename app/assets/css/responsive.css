@@ -1,0 +1,85 @@
+@media (max-width: 768px) {
+  /* General container adjustments */
+  .container {
+    padding: 0 1rem; /* Add some horizontal padding for smaller screens */
+  }
+
+  /* Header adjustments - using viewport units for fluid scaling */
+  h1 {
+    font-size: 4vw; /* Scale font with viewport */
+    max-width: 200px; 
+    min-height: 20px; /* Ensure a minimum height for h1 */
+  }
+
+  h1::before,
+  h1::after {
+    background-image: none; /* Remove complex styling for mobile */
+    background-color: var(--color-primary-500); /* Just use solid background */
+  }
+
+  h1::after {
+    right: 100px; /* Small fixed offset */
+    transform: scaleX(-1);
+  }
+
+  .container h2 {
+    width: auto; /* Allow h2 to fit the container */
+    max-width: 50%;
+    font-size: .75rem;
+  }
+  
+  /* Wellness Grid adjustments */
+  .wellness-grid {
+    grid-template-columns: 1fr 1fr 1fr; /* Keep 3-column layout */
+    gap: 0; /* Get rid of gaps between grid items */
+    max-height: none;
+    border-width: 1px;
+  }
+
+  /* Make content inside grid items smaller */
+  .wellness-grid .grid-item {
+    padding: 0.25rem;
+    border-width: 1px;
+  }
+
+  .wellness-grid .grid-item h3 {
+    font-size: 0.75rem;
+    margin: 0.25rem 0;
+  }
+
+  /* Target the icon specifically */
+  .wellness-grid .grid-item .iconify {
+    font-size: 80px; /* Further increase icon size */
+    width: 80px;
+    height: 80px;
+  }
+
+  /* Wellness List adjustments */
+  .wellness-list .wellness-row {
+    width: auto; /* Allow rows to fit the container */
+    max-width: 100dvw;
+    grid-template-columns: 1fr 2fr auto; /* Adjust column proportions */
+    padding: 0;
+    font-size: .75rem;
+  }
+
+  .wellness-list .wellness-row * {
+    padding: .5rem 1rem; /* Reduce padding in list columns */
+  }
+
+  /* Wellness Activity View */
+  .wellness-activity {
+    width: auto;
+    max-width: 100%;
+    aspect-ratio: unset;
+    max-height: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  /* Footer adjustments */
+  .wellness-footer p {
+    width: auto; /* Allow footer text to fit container */
+    max-width: 80%;
+  }
+}

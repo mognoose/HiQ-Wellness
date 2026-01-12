@@ -1,5 +1,6 @@
 @import 'tokens.css';
 @import 'components/wellness.css';
+@import 'responsive.css';
 
 :root {
   font-family: 'DynaPuff', system-ui;
