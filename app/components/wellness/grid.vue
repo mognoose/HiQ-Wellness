@@ -11,8 +11,8 @@
       id="createdAt"
       name="createdAt"
       v-model="date"
-      min="2026-01-12"
-      max="2026-02-14"
+      :min="formatDateToInput(activityStore.period.start)"
+      :max="formatDateToInput(activityStore.period.end)"
       />
       <button type="submit">Add</button>
       <button @click="resetActivity">Cancel</button>
@@ -37,12 +37,19 @@ const timestamp = new Date();
 const dd = String(timestamp.getDate()).padStart(2, '0')
 const mm = String(timestamp.getMonth() + 1).padStart(2, '0')
 const yyyy = timestamp.getFullYear()
-const today = yyyy + '-' + mm + '-' + 12
+const today = yyyy + '-' + mm + '-' + dd
 
 const date = ref(today)
 const activities = activityStore.activities
 
 const selected = ref<WellnessActivity>({id: '', name: '', icon: '', description: ''})
+
+function formatDateToInput(date: Date): string {
+  const d = String(date.getDate()).padStart(2, '0');
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const y = date.getFullYear();
+  return `${y}-${m}-${d}`;
+}
 
 function setActivity(activity:WellnessActivity) {
   selected.value.id = activity.id

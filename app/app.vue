@@ -11,6 +11,7 @@
   const activityStore = useActivityStore();
 
   onMounted(() => {
+    activityStore.generateWeeks();
     activityStore.loadFromLocalStorage();
   })
 </script>

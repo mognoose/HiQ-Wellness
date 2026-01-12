@@ -6,6 +6,7 @@ interface ActivitiesState {
   activities: WellnessActivity[];
   loggedActivities: LoggedActivity[];
   scores: WellnessScores;
+  weeks: {start: Date, end: Date}[];
 }
 
 interface Period {
@@ -19,6 +20,7 @@ export const useActivityStore = defineStore('activities', {
       start: new Date('2026-01-12'),
       end: new Date('2026-02-14'),
     },
+    weeks: [],
     activities: <Array<WellnessActivity>>[
       {
         id: 'cardio',
@@ -95,7 +97,7 @@ export const useActivityStore = defineStore('activities', {
       this.countScore();
       this.saveToLocalStorage();
     },
-    countScore() {
+    generateWeeks() {
       const weeklyRanges: { start: Date; end: Date }[] = [];
       const periodStart = new Date(this.period.start);
       const periodEnd = new Date(this.period.end);
@@ -113,6 +115,12 @@ export const useActivityStore = defineStore('activities', {
 
         currentWeekStart.setDate(currentWeekStart.getDate() + 7);
       }
+
+      this.weeks = weeklyRanges;
+    },
+    countScore() {
+      this.generateWeeks();
+      const weeklyRanges: { start: Date; end: Date }[] = this.weeks;
 
       const weeklyScores: number[] = [];
       const bingoScores: number[] = [];

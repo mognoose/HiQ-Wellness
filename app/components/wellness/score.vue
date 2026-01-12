@@ -3,11 +3,7 @@
   <table class="wellness-score-table">
     <thead>
       <th></th>
-      <th>VK 3</th>
-      <th>VK 4</th>
-      <th>VK 5</th>
-      <th>VK 6</th>
-      <th>VK 7</th>
+      <th v-for="(week, index) in activityStore.weeks" :key="index">VK {{ getWeek(week) }}</th>
     </thead>
     <tbody>
       <tr>
@@ -35,5 +31,13 @@
   
   const activityStore = useActivityStore();
   const {scores} = storeToRefs(activityStore)
+
+  function getWeek(week: {start: Date, end: Date}) {
+    let date = week.start;
+    date.setHours(0, 0, 0, 0);
+    date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+    var week1 = new Date(date.getFullYear(), 0, 4);
+    return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+  }
 
 </script>
