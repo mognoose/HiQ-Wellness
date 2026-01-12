@@ -85,7 +85,8 @@ export const useActivityStore = defineStore('activities', {
       localStorage.setItem('loggedActivities', JSON.stringify(this.loggedActivities))
     },
     loadFromLocalStorage() {
-      this.loggedActivities = JSON.parse(localStorage.getItem('loggedActivities'))
+      const storedActivities = localStorage.getItem('loggedActivities');
+      this.loggedActivities = storedActivities ? JSON.parse(storedActivities) : [];
     }
   },
 });
