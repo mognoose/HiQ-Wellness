@@ -125,6 +125,7 @@ export const useActivityStore = defineStore('activities', {
       const weeklyScores: number[] = [];
       const bingoScores: number[] = [];
       const totalScores: number[] = [];
+      const bingoScore: number = 5;
 
       for (const range of weeklyRanges) {
         const activitiesInWeek = this.loggedActivities.filter((activity) => {
@@ -139,8 +140,8 @@ export const useActivityStore = defineStore('activities', {
         weeklyScores.push(weeklyScore);
 
         if (weeklyScore === 9) {
-          bingoScores.push(1);
-          totalScores.push(10);
+          bingoScores.push(bingoScore);
+          totalScores.push(weeklyScore + bingoScore);
         } else {
           bingoScores.push(0);
           totalScores.push(weeklyScore);
