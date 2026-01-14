@@ -92,8 +92,10 @@ export const useActivityStore = defineStore('activities', {
       this.saveToLocalStorage();
     },
     removeLoggedActivity(date: string, id: string) {
-      this.loggedActivities = this.loggedActivities
-        .filter(item => item.date !== date || item.id !== id)
+      const index = this.loggedActivities.findIndex(item => item.date === date && item.id === id);
+      if (index !== -1) {
+        this.loggedActivities.splice(index, 1);
+      }
       this.countScore();
       this.saveToLocalStorage();
     },
