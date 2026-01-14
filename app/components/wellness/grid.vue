@@ -20,8 +20,8 @@
   </div>
   <div v-else class="wellness-grid">
     <WellnessGridItem
-      v-for="activity in activities"
-      :key="activity.id"
+      v-for="(activity, index) in activities"
+      :key="` activity-${activity.id}-${index}`"
       :activity="activity"
       @click="setActivity(activity)"
       />
