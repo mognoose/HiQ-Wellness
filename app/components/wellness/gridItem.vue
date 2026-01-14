@@ -24,10 +24,13 @@
 
     const today = new Date();
     const currentWeek = {
-      start: new Date(today.setDate(today.getDate() - today.getDay() + 1)),
-      end: new Date(today.setDate(today.getDate() - today.getDay() + 7)),
+      start: new Date(new Date(today).setDate(today.getDate() - today.getDay() + 1)),
+      end: new Date(new Date(today).setDate(today.getDate() - today.getDay() + 7)),
     }
     
+    currentWeek.start.setHours(0, 0, 0, 0);
+    currentWeek.end.setHours(23, 59, 59, 999);
+
     if (!currentWeek) return false;
 
     return loggedActivities.value.some(logged => {
